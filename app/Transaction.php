@@ -4,9 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Buyer extends Model
+class Transaction extends Model
 {
-    protected fillable = [
-
-    ];
+    //
 }

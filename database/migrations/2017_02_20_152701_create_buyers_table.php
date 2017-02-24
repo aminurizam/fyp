@@ -19,10 +19,8 @@ class CreateBuyersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('noMatrik');
-            $table->string('noPhone');
-            $table->text('address');
-            $table->string('faculty');
-
+            $table->string('noPhone')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }
