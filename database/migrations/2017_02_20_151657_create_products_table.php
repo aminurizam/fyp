@@ -17,11 +17,12 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('image')->nullable(); // retrieve image using the name in the folder
             $table->string('name');
-            $table->float('price', 6, 2);
-            $table->integer('transaction_id');
+            $table->float('price', 8, 2);
+            $table->enum('transactionType', ['buy', 'free', 'exchange']);
+//            $table->integer('transaction_id');
             $table->string('category');
             $table->text('detail');
-            $table->integer('seller_id');
+//            $table->integer('seller_id')->nullable();
             $table->timestamps();
         });
     }

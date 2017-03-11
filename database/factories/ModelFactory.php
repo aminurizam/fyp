@@ -22,3 +22,16 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Product::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->name,
+        'price' => $faker->randomFloat(2,1,99), //(decimal,minimum int, maximum int)
+        'transactionType' =>$faker->randomElement($array = array('buy','free','exchange')),
+        'category' => $faker->randomElement($array = array('adidas','nike','karrimor','puma')),
+        'detail' => $faker->text($maxNbChars = 200),
+        'updated_at' => $faker->unixTime(),
+        'created_at' => $faker->unixTime(),
+    ];
+});

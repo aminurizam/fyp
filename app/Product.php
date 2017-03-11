@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    //
+    protected $fillable = [
+      'name','price','transaction_id','category','detail'
+    ];
+    public function transaction()
+    {
+    	return $this->hasOne(Transaction::class, 'transaction_id');
+    }
 }

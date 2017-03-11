@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'noMatrik', 'email', 'password',
+        'matricNo', 'email', 'password',
     ];
 
     /**
@@ -34,5 +34,5 @@ class User extends Authenticatable
     public function seller(){
       return $this->hasOne(Seller::class, 'user_id');
     }
-    
+
 }

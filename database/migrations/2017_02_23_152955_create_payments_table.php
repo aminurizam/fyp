@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->integer('buyer_id');
             $table->integer('product_id');
-            $table->integer('cart_id')
+            $table->integer('cart_id');
             $table->timestamps();
         });
     }
