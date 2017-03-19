@@ -11,6 +11,11 @@ class Order extends Model
       return $this->belongsTo('App\Buyer', 'buyer_id')->withTimestamps();
     }
 
+    public function seller()
+    {
+        return $this->belongsTo('App\Seller', 'seller_id');
+    }
+
     public function payment()
     {
       return $this->hasOne('App\Payment', 'payment_id')->withTimestamps();

@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'matricNo', 'email', 'password',
+        'name', 'matricNo' ,'email', 'password', 'userRole'
     ];
 
     /**
@@ -26,6 +26,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roleCheck($role = null){
+
+        if ($role){
+            return $this->userRole == $role; //userRole kena sama dengan dalam database
+        }
+
+        return $this->role;
+    }
 
     public function buyer() {
       return $this->hasOne(Buyer::class, 'user_id');

@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('navbar.navbar');
+        return view('home');
     }
+
+
+
 }

@@ -57,20 +57,22 @@
     <div class="row row-offcanvas row-offcanvas-right">
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-            </div>
-        </div><!--/span-->
+        
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item">Link</a>
+                </div>
 
+
+        </div><!--/span-->
 
         <div class="col-12 col-md-9">
             <p class="float-right hidden-md-up">
@@ -81,9 +83,9 @@
                 @yield('content')
             </div><!--/row-->
         </div><!--/span-->
+          @yield ('paginate')
 
     </div><!--/row-->
-
 
     <hr>
 

@@ -15,10 +15,11 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->string('matricNo')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('user_role', ['buyer', 'seller'])->default('buyer');
+            $table->enum('userRole', ['admin', 'buyer', 'seller'])->default('buyer');
             $table->rememberToken();
             $table->timestamps();
         });

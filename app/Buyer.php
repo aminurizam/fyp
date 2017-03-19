@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buyer extends Model
 {
-    protected fillable = [
-      'name', 'address', 'phoneNumber',
+    protected $fillable = [
+        'name','address','phoneNumber'
     ];
 
     public function order()
