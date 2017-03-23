@@ -19,10 +19,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->float('price', 8, 2);
             $table->enum('transactionType', ['buy', 'free', 'exchange']);
-//            $table->integer('transaction_id');
             $table->string('category');
             $table->text('detail');
-//            $table->integer('seller_id')->nullable();
+            $table->integer('seller_id')->nullable();
             $table->timestamps();
         });
     }

@@ -17,8 +17,16 @@ Route::get('/product/{product}', 'ProductController@productDetail');
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth','checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php
+Route::group(['middleware' => ['auth','checkRole:seller']], function() { //checkRole middleware name registered in Kernel.php
     Route::get('test', 'BuyerController@index');
+    Route::get('add/create','ProductController@create');
+    Route::post('add','ProductController@store');
+});
+
+Route::group(['middleware' => ['auth','checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php
+    Route::resource('cart','CartController');
+    Route::resource('comment','CommentController');
 });
 
 Route::get('/home', 'HomeController@index');
+
