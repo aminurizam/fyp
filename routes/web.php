@@ -9,7 +9,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home', 'HomeController@index');
-    Route::get('/post', 'PostsController@index');
 });
 
 Route::get('/product','ProductController@catalog');
@@ -26,7 +25,10 @@ Route::group(['middleware' => ['auth','checkRole:seller']], function() { //check
 Route::group(['middleware' => ['auth','checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php
     Route::resource('cart','CartController');
     Route::resource('comment','CommentController');
+    Route::resource('profile', 'BuyerController');
 });
 
 Route::get('/home', 'HomeController@index');
+
+
 

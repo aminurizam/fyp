@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Buyer extends Model
 {
     protected $fillable = [
-        'name','address','phoneNumber'
+        'name','address','noPhone'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function order()
     {
