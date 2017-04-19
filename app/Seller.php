@@ -10,4 +10,9 @@ class Seller extends Model
     {
         return $this->hasOne('App\Order', 'order_id');
     }
+
+    public function product()
+    {
+        return $this->hasMany(Product::class, 'product_id');
+    }
 }

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/src/self.css') }}">
 
     <!-- Scripts -->
     <script>
@@ -19,6 +20,7 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    
 </head>
 <body>
     <div id="app">
@@ -35,7 +37,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/product') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -53,16 +55,21 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            <li><a href="{{ action('ProductController@viewCart') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
+                                    <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span></a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> 
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/profile') }}"><i class="fa fa-id-badge" aria-hidden="true"></i> 
+                                    User Profile</a></li>
+                                    <li><a href=""><i class="fa fa-history" aria-hidden="true"></i> Order History</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i>
                                             Logout
                                         </a>
 
@@ -70,6 +77,7 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+
                                 </ul>
                             </li>
                         @endif
@@ -105,6 +113,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://use.fontawesome.com/6d58ee138a.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

@@ -27,8 +27,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function roleCheck($role = null){
-
+    public function roleCheck($role = null)
+    {
         if ($role){
             return $this->userRole == $role; //userRole kena sama dengan dalam database
         }
@@ -36,12 +36,24 @@ class User extends Authenticatable
         return $this->role;
     }
 
-    public function buyer() {
-      return $this->hasOne(Buyer::class, 'user_id');
+    public function buyer()
+    {
+      return $this->hasOne(Buyer::class);
     }
 
-    public function seller(){
+    public function seller()
+    {
       return $this->hasOne(Seller::class, 'user_id');
+    }
+
+    public function product()
+    {
+        return $this->hasMany(Product::class, 'product_id');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class, 'cart_id');
     }
 
 }

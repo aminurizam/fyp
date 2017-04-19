@@ -32,7 +32,8 @@ class RoleMiddleware
         if($user && $user->roleCheck($role)){  //rolecheck refer User.php function
             return $next($request);
         } else {
-            dd('seller');
+//            dd('seller');
+            return abort(403, 'Unauthorized action.');
         }
     }
 }

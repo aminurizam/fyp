@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
+use App\Product;
 use Illuminate\Http\Request;
+
+
+
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -13,7 +19,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = Cart::findOrFail($id);
+
     }
 
     /**
@@ -23,7 +30,7 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -34,7 +41,14 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::all();
+        $cart = new Cart();
+        $cart->user_id = Auth::user()->id;
+        $cart->product_id = $request->product_id;
+
+        $cart->save();
+        return redirect()->back()->with('message', 'Product has been added into cart!');
+
     }
 
     /**
@@ -45,7 +59,10 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = Auth::id();
+        $cart = Cart::findOrFail($id);
+//        dd($cart);
+        return view('carts.show-cart', compact('cart'));
     }
 
     /**
@@ -81,4 +98,5 @@ class CartController extends Controller
     {
         //
     }
+
 }

@@ -42,12 +42,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="contact">Contact Number</label>
-                                    <p class="form-control">{{ $profile->phoneNo }}</p>
+                                    <p class="form-control">{{ $profile->buyer->phoneNo }}</p>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="faculty">Faculty</label>
-                                    <p class="form-control">{{ $profile->faculty }}</p>
+                                    <p class="form-control">{{ $profile->buyer->faculty }}</p>
                                 </div>
                             </div>
                         </div>
@@ -56,18 +56,23 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="address">Address</label>
-                                    <p class="form-control">{{ $profile->address }}</p>
+                                    <p class="form-control">{{ $profile->buyer->address }}</p>
                                 </div>
                             </div>
                         </div>
                     @endforeach
 
                     @if($profile->id == Auth::user()->id)
-                        <div class="text-right">
+                        <div class="pull-left">
+                            <a href="">
+                                <button class="btn btn-primary">Be a seller</button>
+                            </a>
+                        </div>
+
+                        <div class="pull-right">
                             <a href="{{ action('BuyerController@edit', $profile->id) }}">
                                 <button type="submit" class="btn btn-primary">Edit<i class="icon-arrow-right14 position-right"></i></button>
                             </a>
-
                         </div>
                     @endif
 

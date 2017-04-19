@@ -10,7 +10,7 @@
 
             <div class="panel-body">
                 @foreach($profiles as $profile)
-                <form action="{{ action('BuyerController@update', $profile->id) }}" method="post">
+                <form action="{{ action('BuyerController@update', $profile->id) }}" method="POST">
 
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}

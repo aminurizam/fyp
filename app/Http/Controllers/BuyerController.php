@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class BuyerController extends Controller
 {
+    protected $table = 'buyers';
+    protected $primaryKey = 'id';
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +19,8 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        $id = Auth::id();
-        $profiles = User::where('id',$id)->get();
+//        $id = Auth::id();
+        $profiles = User::where('id', Auth::user()->id)->get();
 //        dd($profiles);
 //        $profiles = Buyer::where('user_id', Auth::user()->id)->get();
         return view('buyer.show-profile',compact('profiles'));
@@ -89,6 +92,7 @@ class BuyerController extends Controller
         $user->email = $request->email;
 
         //ada problem bila update att dlm buyer database
+        //masalah create first record
 //        $buyer = new Buyer();
         $buyer->user_id = Auth::user()->id;
         $buyer->phoneNo = $request->phoneNo;

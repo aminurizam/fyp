@@ -12,7 +12,7 @@ class Buyer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function order()
@@ -23,5 +23,10 @@ class Buyer extends Model
     public function payment()
     {
       return $this->hasOne('App\Payment', 'payment_id');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class, 'cart_id');
     }
 }
