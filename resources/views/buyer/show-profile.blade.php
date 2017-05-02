@@ -11,6 +11,7 @@
             <div class="panel-body">
 
                     @foreach($profiles as $profile)
+
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
@@ -60,23 +61,22 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
 
                     @if($profile->id == Auth::user()->id)
+                        @if(Auth::user()->roleCheck('buyer'))
                         <div class="pull-left">
-                            <a href="">
-                                <button class="btn btn-primary">Be a seller</button>
+                            <a href="{{ action('BuyerController@beSeller', $profile->id)}}" class="btn btn-primary" name="button">
+                                Be a seller
                             </a>
                         </div>
-
+                        @endif
                         <div class="pull-right">
                             <a href="{{ action('BuyerController@edit', $profile->id) }}">
                                 <button type="submit" class="btn btn-primary">Edit<i class="icon-arrow-right14 position-right"></i></button>
                             </a>
                         </div>
                     @endif
-
-
+                @endforeach
             </div>
         </div>
         <!-- /profile info -->

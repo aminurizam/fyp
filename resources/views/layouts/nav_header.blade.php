@@ -46,9 +46,9 @@
     </div>
 
     <div class="navbar-collapse collapse" id="navbar-form-icons">
-        <form class="navbar-form navbar-left">
+        <form class="navbar-form navbar-left" action="{{ url('product') }}" method="get">
             <div class="form-group has-feedback">
-                <input type="search" class="form-control" placeholder="Search field">
+                <input type="search" class="form-control" placeholder="Search field" name="search">
                 <div class="form-control-feedback">
                     <i class="icon-search4 text-muted text-size-base"></i>
                 </div>

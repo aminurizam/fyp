@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Buyer;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -63,11 +64,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'matricNo' => $data['matricNo'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        $user->buyer()->save(new Buyer());
+        return $user;
     }
 }

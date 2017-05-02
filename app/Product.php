@@ -28,4 +28,11 @@ class Product extends Model
     {
         return $this->belongsTo(Cart::class, 'cart_id');
     }
+
+//    public function productType($type = null)
+//    {
+//        if($type){
+//
+//        }
+//    }
 }

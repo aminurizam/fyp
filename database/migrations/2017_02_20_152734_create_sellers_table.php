@@ -16,7 +16,7 @@ class CreateSellersTable extends Migration
         Schema::create('sellers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('product_id');            
+            $table->integer('product_id')->nullable();
             $table->timestamps();
         });
     }

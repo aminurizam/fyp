@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Cart;
 
@@ -29,10 +30,23 @@ class ProductController extends Controller
          * Accept search input
         */
         $searchResults = Input::get('search');
+        $type = Input::get('type');
 
-        $products = Product::where('name', 'like', '%'.$searchResults.'%')->paginate(6);
+        /*
+         * list out category */
+        $transactionTypes = Product::selectRaw('transactionType')
+            ->groupBy('transactionType')
+            ->get();
 
-        return view('catalog.product', compact('products'));
+        if ($type){
+            $products = Product::where('transactionType', $type)->where('statusItem','accepted')->paginate(6);
+        } elseif($searchResults){
+            $products = Product::where('name', 'like', '%' . $searchResults . '%')->where('statusItem','accepted')->paginate(6);
+        } else{
+            $products = Product::where('statusItem','accepted')->paginate(6);
+        }
+
+        return view('catalog.product', compact('products','transactionTypes'));
     }
 
     public function productDetail($id)
@@ -57,18 +71,20 @@ class ProductController extends Controller
         ]);
 
         $product = new Product();
-//        $product->product_id = $id;
+        $product->seller_id = Auth::user()->id;
         $product->name = $request->name;
         $product->price = $request->price;
         $product->transactionType = $request->transactionType;
         $product->category = $request->category;
+        $product->changeItem = $request->changeItem;
         $product->detail = $request->detail;
         $imageName = time().'.'.$request->image->getClientOriginalExtension();
         $request->image->move(public_path('images'), $imageName);
         $product->image = $request->image;
+
         $product->save();
 
-        return redirect()->action('ProductController@create')->withMessage('Product has been successfully added');
+        return redirect()->action('ProductController@productType')->withMessage('Product has been successfully added');
 
     }
 
@@ -81,7 +97,7 @@ class ProductController extends Controller
 
         $request->session()->put('cart', $cart);
 //        dd($request->session()->get('cart'));
-        return redirect(url('/product'));
+        return redirect(url('/'));
     }
 
     public function viewCart()
@@ -105,4 +121,13 @@ class ProductController extends Controller
         return back();
 
     }
+
+    public function productType()
+    {
+//        $products = Product::all();
+        $products = Product::orderBy('created_at','desc')->first();
+//        dd($products);
+        return view('seller.add-product-type', compact('products'));
+    }
+
 }

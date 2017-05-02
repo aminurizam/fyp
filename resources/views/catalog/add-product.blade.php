@@ -21,13 +21,13 @@
                         </div>
 
                         <div class="col-md-8">
-                            <label for="">Price</label>
-                            <input type="text" name="price" class="form-control" placeholder="Price"><br>
+                            <label for="">Transaction Type</label>
+                            <input type="text" name="transactionType" class="form-control" placeholder="Choose below"><br>
                         </div>
 
                         <div class="col-md-8">
-                            <label for="">Transaction Type</label>
-                            <input type="text" name="transactionType" class="form-control" placeholder="Choose below"><br>
+                            <label for="">Price</label>
+                            <input type="text" name="price" class="form-control" placeholder="Price"><br>
                         </div>
 
                         <div class="col-md-8">
@@ -44,7 +44,7 @@
                             <label>Upload image</label><br>
                             <input type="file" name="image" />
                         </div>
-
+                        {{--<input type="hidden" name="status" class="form-control" value="{{  }}">--}}
                         <div class="col-md-8">
                             <button type="submit" class="btn btn-primary pull-right">Submit</button>
                         </div>

@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Buyer;
+use App\Seller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BuyerController extends Controller
 {
-    protected $table = 'buyers';
-    protected $primaryKey = 'id';
-    
+//    protected $table = 'buyers';
+//    protected $primaryKey = 'id';
+//
     /**
      * Display a listing of the resource.
      *
@@ -91,9 +92,6 @@ class BuyerController extends Controller
         $user->matricNo = $request->matricNo;
         $user->email = $request->email;
 
-        //ada problem bila update att dlm buyer database
-        //masalah create first record
-//        $buyer = new Buyer();
         $buyer->user_id = Auth::user()->id;
         $buyer->phoneNo = $request->phoneNo;
         $buyer->faculty = $request->faculty;
@@ -102,7 +100,7 @@ class BuyerController extends Controller
         $user->save();
         $buyer->save();
 
-        return redirect()->action('BuyerController@index');
+        return redirect()->action('BuyerController@index')->withMessage('Change successful!');
     }
 
     /**
@@ -114,5 +112,20 @@ class BuyerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function beSeller($id)
+    {
+        $profiles = User::findOrFail($id);
+        $profiles->userRole = 'seller';
+
+
+        $seller = new Seller();
+        $seller->user_id = Auth::user()->id;
+        $seller->product_id = '1';
+
+        $profiles->save();
+        $seller->save();
+        return redirect()->route('profile.index')->withMessage('Converting successful!');
     }
 }

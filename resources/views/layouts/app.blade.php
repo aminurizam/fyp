@@ -37,7 +37,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/product') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -50,6 +50,17 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
+                        {{--Search field--}}
+                        <li>
+                            <form class="navbar-form navbar-left" action="{{ url('/') }}" method="get">
+                                <div class="form-group has-feedback">
+                                    <input type="search" class="form-control" placeholder="Search field" name="search">
+                                    <div class="form-control-feedback">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
@@ -113,6 +124,8 @@
     </div>
 
     <!-- Scripts -->
+    {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>--}}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/6d58ee138a.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

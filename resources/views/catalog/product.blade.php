@@ -3,7 +3,14 @@
 
 @section('content')
     <div class="container">
-    @include('catalog.product-category')
+        <div class="thumbnail pull-left">
+            <h4><strong>Type of transaction</strong></h4>
+            @foreach($transactionTypes as $type)
+                <ul>
+                    <li><a href="/?type={{ $type->transactionType }}">{{ $type->transactionType }}</a></li>
+                </ul>
+            @endforeach
+        </div>
     @foreach($products->chunk(3) as $productChunk)
         <div class="row">
             <div class="col-md-offset-2">
