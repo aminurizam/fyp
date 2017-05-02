@@ -28,20 +28,17 @@
                 </ul>
             </div>
 
-            @foreach($products as $product)
-
             <div id="sell-buy" class="tab-pane fade">
                 <div class="col-md-6 col-md-offset-3">
                 <h3><strong>Sell-buy Transaction</strong></h3><br>
                     <form class="form-horizontal" action="{{action('ProductController@store')}}"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>
+                        {{--<h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>--}}
                         <h4>Product name</h4><input type="text" name="name" class="form-control" placeholder="Example: Baju Kemeja"><br>
                         <h4>Price (RM)</h4><input type="text" name="price" class="form-control" placeholder="Eg: 20"><br>
                         <h4>Category</h4><input type="text" name="category" class="form-control" placeholder="Eg: Baju"><br>
                         <h4>Details</h4><textarea name="detail" id="" cols="30" rows="5" class="form-control" placeholder="Eg: Good condition: 7/10"></textarea><br>
                         <h4>Upload Image </h4>
-                        <p><strong>(File name must be same with Product ID </strong>Example: 3.jpg)</p>
                         <input type="file" name="image" />
                         <input type="hidden" name="transactionType" value="buy">
                         <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -49,18 +46,18 @@
                     </form>
                 </div>
             </div>
+
             <div id="free" class="tab-pane fade">
                 <div class="col-md-6 col-md-offset-3">
                 <h3><strong>Free Transaction</strong></h3><br>
                     <form class="form-horizontal" action="{{action('ProductController@store')}}"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>
+                        {{--<h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>--}}
                         <h4>Product name</h4><input type="text" name="name" class="form-control" placeholder="Name"><br>
                         <h4>Price</h4><input type="text" name="price" readonly="readonly" class="form-control" placeholder="RM 0" value="0"><br>
                         <h4>Category</h4><input type="text" name="category" class="form-control" placeholder="Category">
                         <h4>Details</h4><textarea name="detail" id="" cols="30" rows="5" class="form-control"></textarea>
                         <h4>Upload Image</h4>
-                        <p><strong>(File name must be same with Product ID </strong>Example: 3.jpg)</p>
                         <input type="file" name="image" />
                         <input type="hidden" name="transactionType" value="free">
                         <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -68,18 +65,18 @@
                     </form>
                 </div>
             </div>
+
             <div id="exchange" class="tab-pane fade">
                 <div class="col-md-6 col-md-offset-3">
                 <h3><strong>Exchange Item Transaction</strong></h3><br>
                     <form class="form-horizontal" action="{{action('ProductController@store')}}"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>
+                        {{--<h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>--}}
                         <h4>Product name</h4><input type="text" name="name" class="form-control" placeholder="Example: Baju Kemeja"><br>
                         <h4>Item to change</h4><input type="text" name="changeItem" class="form-control" placeholder="Example: Baju T-Shirt"><br>
                         <h4>Category</h4><input type="text" name="category" class="form-control" placeholder="Eg: Baju">
                         <h4>Details</h4><textarea name="detail" id="" cols="30" rows="5" class="form-control" placeholder="Eg: Good condition: 7/10"></textarea>
                         <h4>Upload Image</h4>
-                        <p><strong>(File name must be same with Product ID </strong>Example: 3.jpg)</p>
                         <input type="file" name="image" />
                         <input type="hidden" name="transactionType" value="exchange">
                         <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -88,7 +85,6 @@
                 </div>
             </div>
 
-            @endforeach
         </div>
     </div>
 

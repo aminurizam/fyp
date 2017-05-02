@@ -17,7 +17,8 @@
                 @foreach($productChunk as $product)
                     <div class="col-md-4 text-center" id="catalog">
                         <div class="thumbnail">
-                            <img src="{{ asset('products/'.$product->id.'.jpg') }} " class="img-responsive">
+                            {{--<img src="{{ asset('products/'.$product->id.'.jpg') }} " class="img-responsive">--}}
+                            <img src="{{ $product->image }}" alt="">
                             <h3><strong>{{ $product->name }}</strong></h3>
                             <p> Price: RM {{ $product->price }}</p>
                             <p> Category {{ $product->category }}</p>

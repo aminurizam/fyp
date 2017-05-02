@@ -122,10 +122,15 @@ class BuyerController extends Controller
 
         $seller = new Seller();
         $seller->user_id = Auth::user()->id;
-        $seller->product_id = '1';
+//        $seller->product_id = '1';
 
         $profiles->save();
         $seller->save();
         return redirect()->route('profile.index')->withMessage('Converting successful!');
+    }
+
+    public function showStatus()
+    {
+
     }
 }

@@ -78,9 +78,20 @@ class ProductController extends Controller
         $product->category = $request->category;
         $product->changeItem = $request->changeItem;
         $product->detail = $request->detail;
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images'), $imageName);
-        $product->image = $request->image;
+//        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+//        $request->image->move(public_path('images'), $imageName);
+//        $product->image = $request->image;
+
+//      tambah
+
+        if ($request->hasFile('image')){
+            $this->validate($request, [
+                'image' => 'required|image'
+            ]);
+            $image = '/images/products/product_' . time() . $product->id . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/products/'), $image);
+            $product->image = $image;
+        }
 
         $product->save();
 
