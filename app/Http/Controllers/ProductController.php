@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -78,11 +79,6 @@ class ProductController extends Controller
         $product->category = $request->category;
         $product->changeItem = $request->changeItem;
         $product->detail = $request->detail;
-//        $imageName = time().'.'.$request->image->getClientOriginalExtension();
-//        $request->image->move(public_path('images'), $imageName);
-//        $product->image = $request->image;
-
-//      tambah
 
         if ($request->hasFile('image')){
             $this->validate($request, [
@@ -135,10 +131,15 @@ class ProductController extends Controller
 
     public function productType()
     {
-//        $products = Product::all();
         $products = Product::orderBy('created_at','desc')->first();
-//        dd($products);
         return view('seller.add-product-type', compact('products'));
+    }
+
+    public function viewProductStatus()
+    {
+        $status = Product::where('seller_id', Auth::user()->id)->get();
+//        dd($users);
+        return view('seller.show-product-status',compact('status'));
     }
 
 }

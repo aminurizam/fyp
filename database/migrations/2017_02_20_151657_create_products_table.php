@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('seller_id');
             $table->string('image')->nullable(); // retrieve image using the name in the folder
             $table->string('name');
             $table->float('price', 8, 2)->nullable();
@@ -22,7 +23,6 @@ class CreateProductsTable extends Migration
             $table->string('category');
             $table->string('changeItem')->nullable();
             $table->text('detail');
-            $table->integer('seller_id')->nullable();
             $table->enum('statusItem',['pending','rejected','accepted'])->default('pending');
             $table->timestamps();
         });

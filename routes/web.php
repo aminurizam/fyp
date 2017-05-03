@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function() {
 //        Route::post('add','ProductController@store');
         Route::get('test/create','ProductController@productType');
         Route::post('test','ProductController@store');
+        Route::get('product-status','ProductController@viewProductStatus');
     });
 
     Route::group(['middleware' => ['checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php

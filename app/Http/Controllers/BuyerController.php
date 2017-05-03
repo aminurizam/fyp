@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Buyer;
+use App\Product;
 use App\Seller;
 use App\User;
 use Illuminate\Http\Request;
@@ -131,6 +132,7 @@ class BuyerController extends Controller
 
     public function showStatus()
     {
-
+        $showProduct = Product::where('id',Auth::user()->seller_id)->get();
+        return view('seller.show-status',compact('showProduct'));
     }
 }

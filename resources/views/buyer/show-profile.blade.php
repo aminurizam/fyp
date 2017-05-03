@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <div class="row">
         <!-- Profile info -->
         <div class="panel panel-flat">
             <div class="panel-heading">
@@ -80,5 +81,6 @@
             </div>
         </div>
         <!-- /profile info -->
+        </div>
     </div>
 @endsection
