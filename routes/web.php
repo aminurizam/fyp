@@ -27,12 +27,34 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('profile', 'BuyerController');
     Route::get('/profile/{profile}', 'BuyerController@beSeller');
 
+    Route::get('checkout', [
+       'uses' => 'ProductController@getCheckout',
+        'as' => 'checkout'
+    ]);
+
+    Route::post('checkout', [
+       'uses' => 'ProductController@postCheckout',
+        'as' => 'checkout'
+    ]);
+
+//    Route::get('checkout', [
+//        'uses' => 'ProductController@getCart',
+//        'as' => 'product.shoppingCart'
+//    ]);
+/*
+    Route::get('/checkout',function() {
+       return view('carts.checkout');
+    });*/
+
     Route::group(['middleware' => ['checkRole:seller']], function() { //checkRole middleware name registered in Kernel.php
 //        Route::get('add/create','ProductController@create');
 //        Route::post('add','ProductController@store');
-        Route::get('test/create','ProductController@productType');
-        Route::post('test','ProductController@store');
+        Route::get('add/create','ProductController@productType');
+        Route::post('add','ProductController@store');
         Route::get('product-status','ProductController@viewProductStatus');
+        Route::get('product-status/edit/{product}','ProductController@editProduct');
+        Route::patch('product-status/{prod}', 'ProductController@updateProduct');
+        Route::delete('product-status/delete/{product}', 'ProductController@deleteProduct');
     });
 
     Route::group(['middleware' => ['checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php

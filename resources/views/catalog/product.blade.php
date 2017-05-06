@@ -3,6 +3,15 @@
 
 @section('content')
     <div class="container">
+        @if(Session::has('success'))
+        <div class="row">
+            <div class="col-md-4">
+                <div id="charge-message" class="alert alert-success">
+                    {{ Session::get('success') }}
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="thumbnail pull-left">
             <h4><strong>Type of transaction</strong></h4>
             @foreach($transactionTypes as $type)
@@ -19,7 +28,12 @@
                         <div class="thumbnail">
                             <img src="{{ $product->image }}" alt="">
                             <h3><strong>{{ $product->name }}</strong></h3>
+                            @if($product->price == !null)
                             <p> Price: RM {{ $product->price }}</p>
+                            @endif
+                            @if($product->changeItem == !null)
+                            <p>Item to change: {{ $product->changeItem }}</p>
+                            @endif
                             <p> Category {{ $product->category }}</p>
                             <p> Transaction Type: {{ $product->transactionType }}</p>
                             <a href="{{ url('/product', $product->id) }}" class="btn btn-primary">View product details</a>

@@ -10,13 +10,18 @@
     <hr>
         <div class="row">
             <div class="col-md-4">
-            <a><img src="{{ asset('products/'.$product->id.'.jpg') }} " class="img-thumbnail"></a>
+            <a><img src="{{ $product->image}} " class="img-thumbnail"></a>
                 <br><br>
             </div>
 
             <div class="col-md-8">
                 <h1>{{ $product->name }}</h1>
+                @if($product->price == !null)
                 <p> Price: RM {{ $product->price}}</p>
+                @endif
+                @if($product->changeItem == !null)
+                    <p>Change Item: {{ $product->changeItem }}</p>
+                @endif
                 <p>Category: {{ $product->category }}</p>
                 <p> Transaction Type: {{ $product->transactionType }}</p>
                 <p> Detail: {{ $product->detail }}</p>

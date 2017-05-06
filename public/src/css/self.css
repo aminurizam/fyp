@@ -1,0 +1,20 @@
+.thumbnail img {
+	max-height: 150px;
+}
+
+.table th {
+	/*background-color:#f5f5f5;*/
+	text-align: center;
+}
+
+/*#btn-add-product {*/
+	/*text-align: center;*/
+	/*height: 50px;*/
+	/*padding-top: 10px;*/
+	/*line-height: 22px;*/
+/*}*/
+
+
+.col-md-5 #edit-product{
+	width: 280%;
+}

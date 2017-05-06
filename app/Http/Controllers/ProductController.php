@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Input;
 use App\Cart;
 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Stripe\Charge;
+use Stripe\Stripe;
 
 class ProductController extends Controller
 {
@@ -140,6 +143,73 @@ class ProductController extends Controller
         $status = Product::where('seller_id', Auth::user()->id)->get();
 //        dd($users);
         return view('seller.show-product-status',compact('status'));
+    }
+
+    public function getCheckout()
+    {
+        if(!Session::has('cart')){
+            return view('carts.show-cart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        $total = $cart->totalPrice;
+        return view('carts.checkout', ['total' => $total]);
+    }
+
+    public function postCheckout(Request $request)
+    {
+        if(!Session::has('cart')) {
+            return redirect()->action('ProductController@getCart');
+        }
+        $oldCart =Session::get('cart');
+        $cart = new Cart($oldCart);
+//        repair later
+        Stripe::setApiKey('sk_test_OGTYK9f03acuDWttF6GIygRi');
+        try{
+            Charge::create(array(
+               "amount" => $cart->totalPrice * 100,
+                "currency" => "usd",
+                "source" => $request->input('stripeToken'), // obtained with Stripe.js
+                "description" => "Test Charge"
+            ));
+        } catch (\Exception $e) {
+            return redirect()->action('ProductController@getCheckout')->with('error', $e->getMessage());
+        }
+
+        Session::forget('cart');
+        return redirect()->action('ProductController@catalog')->with('success','Successfully purchased item!');
+    }
+
+    public function editProduct($id)
+    {
+//        $product = Product::findOrFaid($id);
+        $product = Product::where('id',$id)->get();
+        return view('seller.edit-product', compact('product'));
+
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product = Product::where('id', $id)->first();
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->changeItem = $request->changeItem;
+        $product->category = $request->category;
+        $product->detail = $request->detail;
+
+        $product->save();
+
+        return redirect()->action('ProductController@viewProductStatus')->withMessage('Update successful!');
+
+    }
+
+    public function deleteProduct($id)
+    {
+//        dd($id);
+        $product = Product::findOrFail($id)->first();
+        $product->delete();
+        return back()->withErrors('Post has been deleted');
     }
 
 }

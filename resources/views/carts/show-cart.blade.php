@@ -45,7 +45,7 @@
         <hr>
         <div class="row">
             <div class="pull-right">
-                <button type="button" class="btn btn-success">Checkout <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                <a href="{{ action('ProductController@getCheckout') }}" type="button" class="btn btn-success">Checkout <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
             </div>
         </div>
     @else

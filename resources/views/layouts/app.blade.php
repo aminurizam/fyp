@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/src/self.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('src/css/self.css') }}">
 
     <!-- Scripts -->
     <script>
@@ -128,5 +128,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/6d58ee138a.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+@yield('scripts')
 </body>
 </html>
