@@ -15,6 +15,12 @@ class CreateExchangeCartsTable extends Migration
     {
         Schema::create('exchange_carts', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('seller_id')->nullable();
+            $table->integer('product_id');
+            $table->string('image');
+            $table->text('details');
+            $table->enum('statusExchange',['confirmed,rejected'])->nullable();
             $table->timestamps();
         });
     }

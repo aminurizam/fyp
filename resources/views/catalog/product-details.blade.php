@@ -15,6 +15,8 @@
             </div>
 
             <div class="col-md-8">
+                {{--<h1>iduserlogin:{{ Auth::id()}}</h1>--}}
+                {{--<h1>sellerid:{{$product->seller_id}}</h1>--}}
                 <h1>{{ $product->name }}</h1>
                 @if($product->price == !null)
                 <p> Price: RM {{ $product->price}}</p>
@@ -27,14 +29,12 @@
                 <p> Detail: {{ $product->detail }}</p>
                 <br>
                 @if(Auth::check())
-                <form action="{{ action('ProductController@addToCart', $product->id) }}">
-                    {!! csrf_field() !!}
-                    {{--Quantity:<input type="number" name="quantity" min="1" max="10" value="1" required><br><br>--}}
-                    <button type="submit" class="btn btn-success pull-right">Add To Cart</button>
-                    {{-- <input type="hidden" name="product_id" value="{{ $product->id }}"> --}}
-                    {{--<input type="hidden" name="user_id" value="{{ Auth::user }}">--}}
-                </form>
-                    @endif
+                        <form action="{{ action('ProductController@addToCart', $product->id) }}">
+                            {!! csrf_field() !!}
+                            {{--Quantity:<input type="number" name="quantity" min="1" max="10" value="1" required><br><br>--}}
+                            <button type="submit" class="btn btn-success pull-right">Add To Cart</button>
+                        </form>
+                @endif
             </div>
             
         </div>

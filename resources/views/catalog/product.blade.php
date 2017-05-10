@@ -13,10 +13,20 @@
         </div>
         @endif
         <div class="thumbnail pull-left">
-            <h4><strong>Type of transaction</strong></h4>
+            <h4 style="text-align: center"><strong>Type of transaction</strong></h4>
             @foreach($transactionTypes as $type)
                 <ul>
                     <li><a href="/?type={{ $type->transactionType }}">{{ $type->transactionType }}</a></li>
+                </ul>
+            @endforeach
+            <ul>
+                <li><a href="{{ action('ProductController@catalog') }}">View All</a></li>
+            </ul>
+            <br>
+            <h4 style="text-align: center"><strong>Category</strong></h4>
+            @foreach($categories as $category)
+                <ul>
+                    <li><a href="/?category={{ $category->category }}">{{ $category->category }}</a></li>
                 </ul>
             @endforeach
         </div>
@@ -28,14 +38,14 @@
                         <div class="thumbnail">
                             <img src="{{ $product->image }}" alt="">
                             <h3><strong>{{ $product->name }}</strong></h3>
-                            @if($product->price == !null)
+                            <p> Transaction Type: {{ $product->transactionType }}</p>
+                            @if($product->transactionType == 'Buy' || $product->transactionType == 'Free')
                             <p> Price: RM {{ $product->price }}</p>
                             @endif
                             @if($product->changeItem == !null)
                             <p>Item to change: {{ $product->changeItem }}</p>
                             @endif
                             <p> Category {{ $product->category }}</p>
-                            <p> Transaction Type: {{ $product->transactionType }}</p>
                             <a href="{{ url('/product', $product->id) }}" class="btn btn-primary">View product details</a>
                             <br><br>
                         </div>

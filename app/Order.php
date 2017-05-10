@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    public function buyer()
+    public function user()
     {
-      return $this->belongsTo('App\Buyer', 'buyer_id')->withTimestamps();
+      return $this->belongsTo(User::class, 'buyer_id')->withTimestamps();
     }
 
     public function seller()
@@ -19,5 +19,10 @@ class Order extends Model
     public function payment()
     {
       return $this->hasOne('App\Payment', 'payment_id')->withTimestamps();
+    }
+
+    public function exchangeCart()
+    {
+        return $this->belongsTo(ExchangeCart::class,'exchangeCart_id');
     }
 }

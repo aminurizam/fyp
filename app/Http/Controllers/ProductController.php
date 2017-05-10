@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ExchangeCart;
 use App\Product;
 use App\User;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class ProductController extends Controller
         */
         $searchResults = Input::get('search');
         $type = Input::get('type');
+        $category = Input::get('category');
 
         /*
          * list out category */
@@ -42,15 +44,21 @@ class ProductController extends Controller
             ->groupBy('transactionType')
             ->get();
 
+        $categories = Product::selectRaw('category')
+            ->groupBy('category')
+            ->get();
+
         if ($type){
             $products = Product::where('transactionType', $type)->where('statusItem','accepted')->paginate(6);
         } elseif($searchResults){
             $products = Product::where('name', 'like', '%' . $searchResults . '%')->where('statusItem','accepted')->paginate(6);
+        } elseif($category){
+            $products = Product::where('category', $category)->where('statusItem','accepted')->paginate(6);
         } else{
             $products = Product::where('statusItem','accepted')->paginate(6);
         }
 
-        return view('catalog.product', compact('products','transactionTypes'));
+        return view('catalog.product', compact('products','transactionTypes','categories'));
     }
 
     public function productDetail($id)
@@ -101,13 +109,24 @@ class ProductController extends Controller
     public function addToCart(Request $request, $id)
     {
         $product = Product::find($id);
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->add($product, $product->id);
+        if(Auth::id() != $product->seller_id) {
+            if ($product->transactionType == 'Buy' || $product->transactionType == !'Free') {
+                $oldCart = Session::has('cart') ? Session::get('cart') : null;
+                $cart = new Cart($oldCart);
+                $cart->add($product, $product->id);
 
-        $request->session()->put('cart', $cart);
+                $request->session()->put('cart', $cart);
+                return redirect(url('/'));
+            } else {
+//            $product = Product::findOrFail($id);
+                return view('carts.exchange-cart', compact('product'));
+//            return view('carts.exchange-cart');
+            }
+        } else {
+            return redirect()->action('ProductController@catalog')->withErrors('Unable to buy own product');
+        }
+
 //        dd($request->session()->get('cart'));
-        return redirect(url('/'));
     }
 
     public function viewCart()
@@ -119,6 +138,61 @@ class ProductController extends Controller
         $cart = new Cart($oldCart);
         return view('carts.show-cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
     }
+
+/* Exchange Cart Function */
+
+    public function storeExchange(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $exchangeCart = new ExchangeCart();
+        $exchangeCart->user_id = Auth::user()->id;
+        $exchangeCart->seller_id = $request->sid;
+        $exchangeCart->product_id = $request->id;
+        $exchangeCart->details = $request->details;
+        if ($request->hasFile('image')){
+            $this->validate($request, [
+                'image' => 'required|image'
+            ]);
+            $image = '/images/exchange/product_' . time() . $exchangeCart->id . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/exchange/'), $image);
+            $exchangeCart->image = $image;
+        }
+
+        $exchangeCart->save();
+        return redirect()->action('ProductController@catalog')->withMessage('Submitted to seller. Please wait for confirmation from seller');
+    }
+
+    public function confirmExchange()
+    {
+//        $product = Product::findOrFail($id);
+        return view('receipt.receipt');
+
+    }
+
+    public function viewExchange()
+    {
+//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('transactionType','Exchange')->get();
+        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+        return view('carts.exchange-list',compact('exchanges'));
+    }
+
+    public function viewExchangeDetail($id)
+    {
+        $exchanges = ExchangeCart::where('id', $id)->get();
+        return view('carts.confirm-exchange',compact('exchanges'));
+    }
+
+    public function deleteExchange($id)
+    {
+        $exchanges = ExchangeCart::findOrFail($id)->first();
+        $exchanges->delete();
+        return back()->withErrors('Transaction has been rejected');
+    }
+
+/* End of Exchange Cart Function */
 
     public function removeProduct($id)
     {
@@ -141,12 +215,14 @@ class ProductController extends Controller
     public function viewProductStatus()
     {
         $status = Product::where('seller_id', Auth::user()->id)->get();
-//        dd($users);
         return view('seller.show-product-status',compact('status'));
     }
 
     public function getCheckout()
     {
+
+//        $product = Product::where('transactionType','Exchange')->get();
+//        if()
         if(!Session::has('cart')){
             return view('carts.show-cart');
         }
@@ -182,10 +258,8 @@ class ProductController extends Controller
 
     public function editProduct($id)
     {
-//        $product = Product::findOrFaid($id);
         $product = Product::where('id',$id)->get();
         return view('seller.edit-product', compact('product'));
-
     }
 
     public function updateProduct(Request $request, $id)
@@ -206,10 +280,20 @@ class ProductController extends Controller
 
     public function deleteProduct($id)
     {
-//        dd($id);
         $product = Product::findOrFail($id)->first();
         $product->delete();
         return back()->withErrors('Post has been deleted');
+    }
+
+    public function showExchange($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('carts.exchange-cart',compact('product'));
+    }
+
+    public function createOrder()
+    {
+
     }
 
 }

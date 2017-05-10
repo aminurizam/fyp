@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('userRole', ['admin', 'buyer', 'seller'])->default('buyer');
+            $table->integer('seller_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

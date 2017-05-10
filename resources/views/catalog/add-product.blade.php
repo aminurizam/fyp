@@ -35,6 +35,19 @@
                             <input type="text" name="category" class="form-control" placeholder="Choose below"><br>
                         </div>
 
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Fashion</a></li>
+                                <li><a href="#">Electronic</a></li>
+                                <li><a href="#">Sports & Recreation</a></li>
+                                <li><a href="">Health & Beauty</a></li>
+                                <li><a href="">Books</a></li>
+                                <li><a href="">Others</a></li>
+                            </ul>
+                        </div>
+
                         <div class="col-md-8">
                             <label for="">Detail</label>
                             <input type="text" name="detail" class="form-control" placeholder="Additional informations"><br>

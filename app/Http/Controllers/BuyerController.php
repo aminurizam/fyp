@@ -119,7 +119,7 @@ class BuyerController extends Controller
     {
         $profiles = User::findOrFail($id);
         $profiles->userRole = 'seller';
-
+        $profiles->seller_id = Auth::user()->id;
 
         $seller = new Seller();
         $seller->user_id = Auth::user()->id;

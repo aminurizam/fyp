@@ -35,4 +35,9 @@ class Product extends Model
 //
 //        }
 //    }
+
+    public function exchangeCart()
+    {
+        return $this->hasOne(ExchangeCart::class, 'exchangeCart_id');
+    }
 }

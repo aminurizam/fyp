@@ -20,4 +20,9 @@ class Seller extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function exchangeCart()
+    {
+        return $this->hasOne(ExchangeCart::class, 'exchangeCart_id');
+    }
 }

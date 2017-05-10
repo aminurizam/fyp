@@ -58,12 +58,11 @@
                                 </th>
                                 <th>
                                     <a href="{{ action('ProductController@editProduct', $stat->id) }}" class="btn btn-success">Edit</a>
-                                    <form action="{{action('ProductController@deleteProduct' ,$stat->id)}}" method="post">
+                                    <form action="{{ action('ProductController@deleteProduct' ,$stat->id) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <button type="submit">Delete</button>
+                                        <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
-                                    {{--<a href="{{ action('ProductController@deleteProduct', $stat->id ) }}" class="btn btn-danger">Delete</a>--}}
                                 </th>
                             </tr>
                         @endforeach

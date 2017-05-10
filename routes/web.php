@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/cart/{id}','ProductController@removeProduct');
     Route::resource('profile', 'BuyerController');
     Route::get('/profile/{profile}', 'BuyerController@beSeller');
+    Route::post('add/exchange-cart', 'ProductController@storeExchange');
 
     Route::get('checkout', [
        'uses' => 'ProductController@getCheckout',
@@ -55,6 +56,11 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('product-status/edit/{product}','ProductController@editProduct');
         Route::patch('product-status/{prod}', 'ProductController@updateProduct');
         Route::delete('product-status/delete/{product}', 'ProductController@deleteProduct');
+//        Route::get('product/exchange-cart/{id}','ProductController@confirmExchange');
+        Route::get('exchange-cart/list','ProductController@viewExchange');
+        Route::get('exchange-cart/list/{id}','ProductController@viewExchangeDetail');
+        Route::delete('exchange-cart/list/{id}','ProductController@deleteExchange');
+        Route::get('exchange-cart/receipt','ProductController@confirmExchange');
     });
 
     Route::group(['middleware' => ['checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php

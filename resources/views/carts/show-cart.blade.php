@@ -12,8 +12,8 @@
             <div class="">
                 <ul class="list-group">
                     @foreach($products as $product)
+                        {{--@if($product->transactionType ==! 'Buy' || $product->transactionType ==! 'Free' )--}}
                         <li class="list-group-item">
-                            {{--<span class="badge">{{ $product['qty'] }}</span>--}}
                             <strong>{{ $product ['item']['name'] }}</strong>
                             <span class="label label-success">RM {{ $product['price'] }}</span>
                             <span class="badge">{{ $product['qty'] }}</span>
@@ -23,7 +23,6 @@
                                 {{--<button type="submit">Remove</button>--}}
                                 {{--<i class="fa fa-times pull-right" aria-hidden="true"></i>--}}
                             {{--</form>--}}
-
                             {{--<div class="btn-group">
                                 <button type="button" class="btn btn-primary btn-group-xs dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
@@ -32,6 +31,7 @@
                                 </ul>
                             </div>--}}
                         </li>
+                        {{--@endif--}}
                     @endforeach
                 </ul>
             </div>

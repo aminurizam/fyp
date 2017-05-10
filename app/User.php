@@ -56,4 +56,9 @@ class User extends Authenticatable
         return $this->hasOne(Cart::class, 'cart_id');
     }
 
+    public function exchangeCart()
+    {
+        return $this->hasOne(ExchangeCart::class, 'exchangeCart_id');
+    }
+
 }
