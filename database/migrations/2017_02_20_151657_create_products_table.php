@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->float('price', 8, 2)->nullable();
             $table->enum('transactionType', ['Buy', 'Free', 'Exchange']);
+            $table->integer('quantity');
             $table->string('category');
             $table->string('changeItem')->nullable();
             $table->text('detail');

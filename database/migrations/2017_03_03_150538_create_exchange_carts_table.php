@@ -19,6 +19,7 @@ class CreateExchangeCartsTable extends Migration
             $table->integer('seller_id')->nullable();
             $table->integer('product_id');
             $table->string('image');
+            $table->string('name');
             $table->text('details');
             $table->enum('statusExchange',['confirmed,rejected'])->nullable();
             $table->timestamps();

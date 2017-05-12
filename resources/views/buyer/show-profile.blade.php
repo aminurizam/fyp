@@ -7,6 +7,7 @@
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <h3>Profile information</h3>
+
             </div>
 
             <div class="panel-body">
@@ -67,7 +68,7 @@
                         @if(Auth::user()->roleCheck('buyer'))
                         <div class="pull-left">
                             <a href="{{ action('BuyerController@beSeller', $profile->id)}}">
-                                <button type="submit" class="btn btn-primary">Be a seller</button>
+                                {{--<button type="submit" class="btn btn-primary">Be a seller</button>--}}
                             </a>
                         </div>
                         @endif
@@ -76,6 +77,7 @@
                                 <button type="submit" class="btn btn-primary">Edit<i class="icon-arrow-right14 position-right"></i></button>
                             </a>
                         </div>
+
                     @endif
                 @endforeach
             </div>

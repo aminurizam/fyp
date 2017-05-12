@@ -38,6 +38,9 @@ Route::group(['middleware' => ['auth']], function() {
         'as' => 'checkout'
     ]);
 
+    Route::get('order-history','ProductController@orderHistory');
+
+
 //    Route::get('checkout', [
 //        'uses' => 'ProductController@getCart',
 //        'as' => 'product.shoppingCart'
@@ -61,6 +64,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('exchange-cart/list/{id}','ProductController@viewExchangeDetail');
         Route::delete('exchange-cart/list/{id}','ProductController@deleteExchange');
         Route::get('exchange-cart/receipt','ProductController@confirmExchange');
+        Route::get('exchange-receipt','ProductController@exchangeReceipt');
     });
 
     Route::group(['middleware' => ['checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php

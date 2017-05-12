@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ExchangeCart;
+use App\Order;
 use App\Product;
 use App\User;
 use Illuminate\Http\Request;
@@ -168,7 +169,8 @@ class ProductController extends Controller
     public function confirmExchange()
     {
 //        $product = Product::findOrFail($id);
-        return view('receipt.receipt');
+        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+        return view('receipt.exchange-receipt', compact('exchanges'));
 
     }
 
@@ -190,6 +192,12 @@ class ProductController extends Controller
         $exchanges = ExchangeCart::findOrFail($id)->first();
         $exchanges->delete();
         return back()->withErrors('Transaction has been rejected');
+    }
+
+    public function exchangeReceipt($id)
+    {
+        $exchanges = ExchangeCart::where('id', $id)->get();
+        return view('receipt.exchange-receipt', compact('exchanges'));
     }
 
 /* End of Exchange Cart Function */
@@ -220,9 +228,6 @@ class ProductController extends Controller
 
     public function getCheckout()
     {
-
-//        $product = Product::where('transactionType','Exchange')->get();
-//        if()
         if(!Session::has('cart')){
             return view('carts.show-cart');
         }
@@ -237,17 +242,25 @@ class ProductController extends Controller
         if(!Session::has('cart')) {
             return redirect()->action('ProductController@getCart');
         }
-        $oldCart =Session::get('cart');
+        $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
-//        repair later
         Stripe::setApiKey('sk_test_OGTYK9f03acuDWttF6GIygRi');
         try{
-            Charge::create(array(
+            $charge = Charge::create(array(
                "amount" => $cart->totalPrice * 100,
-                "currency" => "usd",
+                "currency" => "myr",
                 "source" => $request->input('stripeToken'), // obtained with Stripe.js
                 "description" => "Test Charge"
             ));
+
+            $order = new Order();
+            $order->cart = serialize($cart);
+            $order->name = $request->name;
+            $order->address = $request->address;
+            $order->payment_id = $charge->id;
+
+            Auth::user()->orders()->save($order);
+
         } catch (\Exception $e) {
             return redirect()->action('ProductController@getCheckout')->with('error', $e->getMessage());
         }
@@ -291,9 +304,18 @@ class ProductController extends Controller
         return view('carts.exchange-cart',compact('product'));
     }
 
-    public function createOrder()
-    {
+    /* Order History */
 
+    public function orderHistory()
+    {
+        $orders = Auth::user()->orders;
+        $orders->transform(function ($order, $key){
+           $order->cart = unserialize($order->cart);
+           return $order;
+        });
+        return view('orders.order-history', ['orders' => $orders]);
+//        return view('orders.order-history');
     }
 
+    /* End Order History */
 }
