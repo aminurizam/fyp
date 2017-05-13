@@ -26,6 +26,7 @@
                 <div class="col-md-6">
                     <div class="thumbnail">
                         <img src="{{ $exchange->image }}" alt="">
+                        <p> Product Name: {{ $exchange->name }}</p>
                         <p> Details: {{ $exchange->details }} </p>
                     </div>
                 </div>

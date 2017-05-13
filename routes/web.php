@@ -12,7 +12,6 @@
 //});
 
 
-
 Route::get('/','ProductController@catalog');
 Route::get('/product/{product}', 'ProductController@productDetail');
 
@@ -39,16 +38,10 @@ Route::group(['middleware' => ['auth']], function() {
     ]);
 
     Route::get('order-history','ProductController@orderHistory');
+    Route::get('receipt','ProductController@checkoutReceipt');
 
-
-//    Route::get('checkout', [
-//        'uses' => 'ProductController@getCart',
-//        'as' => 'product.shoppingCart'
-//    ]);
-/*
-    Route::get('/checkout',function() {
-       return view('carts.checkout');
-    });*/
+    Route::get('exchange-cart/receipt','ProductController@confirmExchange');
+    Route::get('exchange-cart/receipt/print','ProductController@printExchange');
 
     Route::group(['middleware' => ['checkRole:seller']], function() { //checkRole middleware name registered in Kernel.php
 //        Route::get('add/create','ProductController@create');
@@ -63,8 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('exchange-cart/list','ProductController@viewExchange');
         Route::get('exchange-cart/list/{id}','ProductController@viewExchangeDetail');
         Route::delete('exchange-cart/list/{id}','ProductController@deleteExchange');
-        Route::get('exchange-cart/receipt','ProductController@confirmExchange');
-        Route::get('exchange-receipt','ProductController@exchangeReceipt');
+
     });
 
     Route::group(['middleware' => ['checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php

@@ -37,27 +37,14 @@
                         <div class="form-group">
                             <h4>Product name</h4><input type="text" name="name" class="form-control" placeholder="Example: Baju Kemeja"><br>
                             <h4>Price (RM)</h4><input type="text" name="price" class="form-control" placeholder="Eg: 20"><br>
-                            {{--<h4>Category</h4><input type="text" name="category" class="form-control" placeholder="Eg: Baju"><br>--}}
                             <h4>Category</h4>
-                            {{--<div class="dropdown">--}}
-                                {{--<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Choose category--}}
-                                    {{--<span class="caret"></span></button>--}}
-                                {{--<ul class="dropdown-menu">--}}
-                                    {{--<li><a href="#">Fashion</a></li>--}}
-                                    {{--<li><a href="#">Electronic</a></li>--}}
-                                    {{--<li><a href="#">Sports & Recreation</a></li>--}}
-                                    {{--<li><a href="">Health & Beauty</a></li>--}}
-                                    {{--<li><a href="">Books</a></li>--}}
-                                    {{--<li><a href="">Others</a></li>--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
                             <div class="dropdown">
                                 <select id="mySelect" class="form-control" name="category">
                                     <option value="">Select category</option>
                                     <option value="Fashion">Fashion</option>
                                     <option value="Electronic">Electronic</option>
-                                    <option value="Sports & Recreation">Sports & Recreation</option>
-                                    <option value="Health & Beauty">Health & Beauty</option>
+                                    <option value="Sports & Recreation">Sports</option>
+                                    <option value="Health & Beauty">Health</option>
                                     <option value="Books">Books</option>
                                     <option value="Others">Others</option>
                                 </select>
@@ -79,22 +66,24 @@
                 <h3><strong>Free Transaction</strong></h3><br>
                     <form class="form-horizontal" action="{{action('ProductController@store')}}"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        {{--<h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>--}}
                         <h4>Product name</h4><input type="text" name="name" class="form-control" placeholder="Name"><br>
                         <h4>Price</h4><input type="text" name="price" readonly="readonly" class="form-control" placeholder="RM 0" value="0"><br>
+                        <h4>Category</h4>
                         <div class="dropdown">
                             <select id="mySelect" class="form-control" name="category">
                                 <option value="">Select category</option>
                                 <option value="Fashion">Fashion</option>
                                 <option value="Electronic">Electronic</option>
-                                <option value="Sports & Recreation">Sports & Recreation</option>
-                                <option value="Health & Beauty">Health & Beauty</option>
+                                <option value="Sports & Recreation">Sports</option>
+                                <option value="Health & Beauty">Health</option>
                                 <option value="Books">Books</option>
                                 <option value="Others">Others</option>
                             </select>
                         </div>
+                        <br>
                         <h4>Details</h4><textarea name="detail" id="" cols="30" rows="5" class="form-control"></textarea>
                         <h4>Upload Image</h4>
+                        {{--<input type="hidden" name="qty" value="1">--}}
                         <input type="file" name="image" />
                         <input type="hidden" name="transactionType" value="free">
                         <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -111,17 +100,19 @@
                         {{--<h4>Product ID</h4><input type="text" name="id" class="form-control" value="{{ $products->id+1 }}" readonly="readonly"><br>--}}
                         <h4>Product name</h4><input type="text" name="name" class="form-control" placeholder="Example: Baju Kemeja"><br>
                         <h4>Item to change</h4><input type="text" name="changeItem" class="form-control" placeholder="Example: Baju T-Shirt"><br>
+                        <h4>Category</h4>
                         <div class="dropdown">
                             <select id="mySelect" class="form-control" name="category">
                                 <option value="">Select category</option>
                                 <option value="Fashion">Fashion</option>
                                 <option value="Electronic">Electronic</option>
-                                <option value="Sports & Recreation">Sports & Recreation</option>
-                                <option value="Health & Beauty">Health & Beauty</option>
+                                <option value="Sports & Recreation">Sports</option>
+                                <option value="Health & Beauty">Health</option>
                                 <option value="Books">Books</option>
                                 <option value="Others">Others</option>
                             </select>
                         </div>
+                        <br>
                         <h4>Details</h4><textarea name="detail" id="" cols="30" rows="5" class="form-control" placeholder="Eg: Good condition: 7/10"></textarea>
                         <h4>Upload Image</h4>
                         <input type="file" name="image" />

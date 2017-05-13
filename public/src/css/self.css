@@ -18,3 +18,7 @@
 .col-md-5 #edit-product{
 	width: 280%;
 }
+
+table td {
+	text-align: center;
+}

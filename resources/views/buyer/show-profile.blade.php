@@ -4,84 +4,101 @@
     <div class="container">
         <div class="row">
         <!-- Profile info -->
-        <div class="panel panel-flat">
-            <div class="panel-heading">
-                <h3>Profile information</h3>
-
-            </div>
-
-            <div class="panel-body">
-
+            <div class="col-md-12">
+                <div class="col-md-2">
                     @foreach($profiles as $profile)
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Email</label>
-                                    <p class="form-control">{{ $profile->email }}</p>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label>Matric number</label>
-                                    <p class="form-control">{{ $profile->matricNo }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Name</label>
-                                    <p class="form-control">{{ $profile->name }}</p>
-                                </div>
-                                {{--<div class="col-md-6">
-                                    <label>Last Name</label>
-                                    <input type="text" value="{{ $profile->id }}" class="form-control">
-                                </div>--}}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="contact">Contact Number</label>
-                                    <p class="form-control">{{ $profile->buyer->phoneNo }}</p>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="faculty">Faculty</label>
-                                    <p class="form-control">{{ $profile->buyer->faculty }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="address">Address</label>
-                                    <p class="form-control">{{ $profile->buyer->address }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    @if($profile->id == Auth::user()->id)
-                        @if(Auth::user()->roleCheck('buyer'))
-                        <div class="pull-left">
-                            <a href="{{ action('BuyerController@beSeller', $profile->id)}}">
-                                {{--<button type="submit" class="btn btn-primary">Be a seller</button>--}}
-                            </a>
-                        </div>
+                        <h4 style="text-transform: capitalize">{{ $profile->userRole }} Account</h4>
+                        <br>
+                        <a href="{{ action('BuyerController@index') }}">Account Dashboard</a>
+                        <a href="">Order History</a>
+                        <br><br>
+                        @if($profile->userRole == 'seller')
+                            <h4>Product Section</h4>
+                            <a href="{{ action('ProductController@productType') }}">Add Product to Catalog</a>
+                            <a href="{{ action('ProductController@viewProductStatus') }}">Status Product</a>
+                            {{--<a href=""></a>--}}
                         @endif
-                        <div class="pull-right">
-                            <a href="{{ action('BuyerController@edit', $profile->id) }}">
-                                <button type="submit" class="btn btn-primary">Edit<i class="icon-arrow-right14 position-right"></i></button>
-                            </a>
-                        </div>
+                    @endforeach
+                </div>
 
-                    @endif
-                @endforeach
+                <div class="col-md-10">
+                    <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h3>Profile information</h3>
+
+                </div>
+
+                <div class="panel-body">
+
+                        @foreach($profiles as $profile)
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Email</label>
+                                        <p class="form-control" readonly>{{ $profile->email }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>Matric number</label>
+                                        <p class="form-control" readonly>{{ $profile->matricNo }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Name</label>
+                                        <p class="form-control" readonly>{{ $profile->name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="contact">Contact Number</label>
+                                        <p class="form-control" readonly>{{ $profile->buyer->phoneNo }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="faculty">Faculty</label>
+                                        <p class="form-control" readonly>{{ $profile->buyer->faculty }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="address">Address</label>
+                                        <p><textarea name="address" id="" cols="20" rows="5" class="form-control" readonly>{{ $profile->buyer->address }}</textarea></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @if($profile->id == Auth::user()->id)
+                            @if(Auth::user()->roleCheck('buyer'))
+                            <div class="pull-left">
+                                <a href="{{ action('BuyerController@beSeller', $profile->id)}}">
+                                    <button type="submit" class="btn btn-primary">Be a seller</button>
+                                </a>
+                            </div>
+                            @endif
+                            <div class="pull-right">
+                                <a href="{{ action('BuyerController@edit', $profile->id) }}">
+                                    <button type="submit" class="btn btn-primary">Edit<i class="icon-arrow-right14 position-right"></i></button>
+                                </a>
+                            </div>
+
+                        @endif
+                    @endforeach
+                </div>
             </div>
-        </div>
+                </div>
+
+            </div>
         <!-- /profile info -->
         </div>
     </div>

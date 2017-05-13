@@ -20,11 +20,13 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->float('price', 8, 2)->nullable();
             $table->enum('transactionType', ['Buy', 'Free', 'Exchange']);
-            $table->integer('quantity');
+            $table->integer('quantity')->default('1');
             $table->string('category');
             $table->string('changeItem')->nullable();
             $table->text('detail');
             $table->enum('statusItem',['pending','rejected','accepted'])->default('pending');
+//            $table->enum('availability',['yes','no'])->default('yes');
+//            $table->integer('qty');
             $table->timestamps();
         });
     }

@@ -16,6 +16,9 @@ use Illuminate\Support\Str;
 use Stripe\Charge;
 use Stripe\Stripe;
 
+use Barryvdh\DomPDF\PDF;
+
+
 class ProductController extends Controller
 {
 
@@ -50,13 +53,13 @@ class ProductController extends Controller
             ->get();
 
         if ($type){
-            $products = Product::where('transactionType', $type)->where('statusItem','accepted')->paginate(6);
+            $products = Product::where('transactionType', $type)->where('statusItem','accepted')->where('quantity','1')->paginate(6);
         } elseif($searchResults){
-            $products = Product::where('name', 'like', '%' . $searchResults . '%')->where('statusItem','accepted')->paginate(6);
+            $products = Product::where('name', 'like', '%' . $searchResults . '%')->where('statusItem','accepted')->where('quantity','1')->paginate(6);
         } elseif($category){
-            $products = Product::where('category', $category)->where('statusItem','accepted')->paginate(6);
+            $products = Product::where('category', $category)->where('statusItem','accepted')->where('quantity','1')->paginate(6);
         } else{
-            $products = Product::where('statusItem','accepted')->paginate(6);
+            $products = Product::where('statusItem','accepted')->where('quantity','1')->paginate(6);
         }
 
         return view('catalog.product', compact('products','transactionTypes','categories'));
@@ -91,6 +94,7 @@ class ProductController extends Controller
         $product->category = $request->category;
         $product->changeItem = $request->changeItem;
         $product->detail = $request->detail;
+//        $product->qty = $request->qty;
 
         if ($request->hasFile('image')){
             $this->validate($request, [
@@ -144,6 +148,9 @@ class ProductController extends Controller
 
     public function storeExchange(Request $request)
     {
+        $product = Product::where('id', $request->id)->first();
+        $product->quantity = 0;
+//        dd($product);
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -153,6 +160,7 @@ class ProductController extends Controller
         $exchangeCart->seller_id = $request->sid;
         $exchangeCart->product_id = $request->id;
         $exchangeCart->details = $request->details;
+        $exchangeCart->name = $request->name;
         if ($request->hasFile('image')){
             $this->validate($request, [
                 'image' => 'required|image'
@@ -160,18 +168,11 @@ class ProductController extends Controller
             $image = '/images/exchange/product_' . time() . $exchangeCart->id . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/exchange/'), $image);
             $exchangeCart->image = $image;
-        }
-
-        $exchangeCart->save();
-        return redirect()->action('ProductController@catalog')->withMessage('Submitted to seller. Please wait for confirmation from seller');
     }
 
-    public function confirmExchange()
-    {
-//        $product = Product::findOrFail($id);
-        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
-        return view('receipt.exchange-receipt', compact('exchanges'));
-
+        $exchangeCart->save();
+        $product->save();
+        return redirect()->action('ProductController@catalog')->withMessage('Submitted to seller. Please wait for confirmation from seller');
     }
 
     public function viewExchange()
@@ -185,6 +186,7 @@ class ProductController extends Controller
     {
         $exchanges = ExchangeCart::where('id', $id)->get();
         return view('carts.confirm-exchange',compact('exchanges'));
+
     }
 
     public function deleteExchange($id)
@@ -194,10 +196,23 @@ class ProductController extends Controller
         return back()->withErrors('Transaction has been rejected');
     }
 
-    public function exchangeReceipt($id)
+    public function confirmExchange()
     {
-        $exchanges = ExchangeCart::where('id', $id)->get();
+//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('product_id','2')->get();
+        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+//        return redirect()->action('ProductController@checkoutReceipt')->with('success','Successfully purchased item!');
+//        return view('receipt.exchange-receipt', compact('exchanges'));
         return view('receipt.exchange-receipt', compact('exchanges'));
+    }
+
+    public function printExchange()
+    {
+//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('product_id','2')->get();
+        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('receipt.print-exchange-receipt', compact('exchanges'));
+        return $pdf->stream('print-exchange-receipt.pdf');
+//        return view('receipt.print-exchange-receipt', compact('exchanges'));
     }
 
 /* End of Exchange Cart Function */
@@ -240,7 +255,7 @@ class ProductController extends Controller
     public function postCheckout(Request $request)
     {
         if(!Session::has('cart')) {
-            return redirect()->action('ProductController@getCart');
+            return redirect()->action('ProductController@viewCart');
         }
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
@@ -266,7 +281,12 @@ class ProductController extends Controller
         }
 
         Session::forget('cart');
-        return redirect()->action('ProductController@catalog')->with('success','Successfully purchased item!');
+        return redirect()->action('ProductController@checkoutReceipt')->with('success','Successfully purchased item!');
+    }
+
+    public function checkoutReceipt()
+    {
+        return view('receipt.receipt');
     }
 
     public function editProduct($id)

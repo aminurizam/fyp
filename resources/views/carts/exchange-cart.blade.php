@@ -28,9 +28,9 @@
                         <input type="hidden" value="{{ $product->id }}" name="id">
                         <input type="hidden" value="{{ $product->seller_id }}" name="sid">
                         <img class="image-placeholder img-circle-profile" style="width: 200px; height: 450px"/><br><br>
-                        <h4><strong>Name</strong></h4>
+                        <h4><strong>Product Name</strong></h4>
                         <input type="text" name="name" class="form-control" placeholder="Product name">
-                        <h4><strong>Detail</strong></h4>
+                        <h4><strong>Details</strong></h4>
                         <textarea name="details" cols="30" rows="5" class="form-control" placeholder="Provide any related information for the product.." required></textarea><br>
                         <h4><strong>Upload Image</strong></h4>
                         <input type="file" name="image" id="fileUpload" required>
