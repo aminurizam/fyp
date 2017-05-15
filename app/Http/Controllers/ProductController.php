@@ -115,17 +115,19 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if(Auth::id() != $product->seller_id) {
-            if ($product->transactionType == 'Buy' || $product->transactionType == !'Free') {
+            if ($product->transactionType == 'Buy') {
                 $oldCart = Session::has('cart') ? Session::get('cart') : null;
                 $cart = new Cart($oldCart);
                 $cart->add($product, $product->id);
 
                 $request->session()->put('cart', $cart);
                 return redirect(url('/'));
-            } else {
+            } elseif($product->transactionType == 'Exchange') {
 //            $product = Product::findOrFail($id);
                 return view('carts.exchange-cart', compact('product'));
 //            return view('carts.exchange-cart');
+            } else {
+                return view('carts.free-cart',compact('product'));
             }
         } else {
             return redirect()->action('ProductController@catalog')->withErrors('Unable to buy own product');
@@ -192,23 +194,24 @@ class ProductController extends Controller
     public function deleteExchange($id)
     {
         $exchanges = ExchangeCart::findOrFail($id)->first();
+        $product = Product::where('id', $exchanges->product_id)->first();
+        $product->quantity = '1';
+        $product->save();
         $exchanges->delete();
         return back()->withErrors('Transaction has been rejected');
     }
 
-    public function confirmExchange()
+    public function confirmExchange($id)
     {
-//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('product_id','2')->get();
-        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
-//        return redirect()->action('ProductController@checkoutReceipt')->with('success','Successfully purchased item!');
-//        return view('receipt.exchange-receipt', compact('exchanges'));
+//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get()
+        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('product_id', $id)->get();
         return view('receipt.exchange-receipt', compact('exchanges'));
     }
 
-    public function printExchange()
+    public function printExchange($id)
     {
-//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('product_id','2')->get();
-        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('product_id', $id)->get();
+//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
         $pdf = app('dompdf.wrapper');
         $pdf->loadView('receipt.print-exchange-receipt', compact('exchanges'));
         return $pdf->stream('print-exchange-receipt.pdf');
@@ -240,6 +243,10 @@ class ProductController extends Controller
         $status = Product::where('seller_id', Auth::user()->id)->get();
         return view('seller.show-product-status',compact('status'));
     }
+
+/*
+ * Sell & Buy Function
+ * */
 
     public function getCheckout()
     {
@@ -289,6 +296,25 @@ class ProductController extends Controller
         return view('receipt.receipt');
     }
 
+
+    //Order History in User Profile
+    public function orderHistory()
+    {
+        $orders = Auth::user()->orders;
+        $orders->transform(function ($order, $key){
+            $order->cart = unserialize($order->cart);
+            return $order;
+        });
+        return view('orders.order-history', ['orders' => $orders]);
+//        return view('orders.order-history');
+    }
+
+
+
+/*
+ * end of sell & buy function
+ * */
+
     public function editProduct($id)
     {
         $product = Product::where('id',$id)->get();
@@ -324,18 +350,5 @@ class ProductController extends Controller
         return view('carts.exchange-cart',compact('product'));
     }
 
-    /* Order History */
 
-    public function orderHistory()
-    {
-        $orders = Auth::user()->orders;
-        $orders->transform(function ($order, $key){
-           $order->cart = unserialize($order->cart);
-           return $order;
-        });
-        return view('orders.order-history', ['orders' => $orders]);
-//        return view('orders.order-history');
-    }
-
-    /* End Order History */
 }

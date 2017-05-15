@@ -11,13 +11,19 @@
                         <br>
                         <a href="{{ action('BuyerController@index') }}">Account Dashboard</a>
                         <a href="">Order History</a>
-                        <br><br>
+
                         @if($profile->userRole == 'seller')
+                            <br><br>
                             <h4>Product Section</h4>
                             <a href="{{ action('ProductController@productType') }}">Add Product to Catalog</a>
                             <a href="{{ action('ProductController@viewProductStatus') }}">Status Product</a>
                             {{--<a href=""></a>--}}
                         @endif
+                        <br><br>
+                        <h4>Carts Section</h4>
+                        <a href="{{ action('ProductController@viewCart') }}">Sell and Buy Cart</a><br>
+                        <a href="">Free Cart</a><br>
+                        <a href="">Exchange Cart</a><br>
                     @endforeach
                 </div>
 

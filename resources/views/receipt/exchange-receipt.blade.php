@@ -9,7 +9,7 @@
 
                 <h2 class="pull-left">Receipt Order #0000{{ $exchange->id }}</h2>
                 <br>
-                <a href="{{ action('ProductController@printExchange') }}" class="btn btn-primary pull-right">Print as PDF</a>
+                <a href="{{ action('ProductController@printExchange', $exchange->product_id) }}" class="btn btn-primary pull-right">Print as PDF</a>
                 <br>
                 <hr>
 

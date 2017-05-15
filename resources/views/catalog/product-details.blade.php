@@ -10,7 +10,7 @@
     <hr>
         <div class="row">
             <div class="col-md-4">
-            <a><img src="{{ $product->image}} " class="img-thumbnail"></a>
+            <a><img src="{{ $product->image }} " class="img-thumbnail"></a>
                 <br><br>
             </div>
 

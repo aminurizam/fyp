@@ -21,7 +21,7 @@ class CreateExchangeCartsTable extends Migration
             $table->string('image');
             $table->string('name');
             $table->text('details');
-            $table->enum('statusExchange',['confirmed,rejected'])->nullable();
+            $table->enum('statusExchange',['pending','confirmed','rejected'])->default('pending');
             $table->timestamps();
         });
     }

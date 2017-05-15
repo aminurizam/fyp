@@ -42,7 +42,7 @@
                         <button type="submit" class="btn btn-danger">Reject</button>
                     </form>
                     {{--<button type="submit" class="btn btn-success">Confirm</button>--}}
-                    <a href="{{ action('ProductController@confirmExchange') }}" class="btn btn-success">Confirm</a>
+                    <a href="{{ action('ProductController@confirmExchange', $exchange->product_id) }}" class="btn btn-success">Confirm</a>
                 </div>
             </div>
 

@@ -11,11 +11,14 @@
 //    Route::get('/home', 'HomeController@index');
 //});
 
-
 Route::get('/','ProductController@catalog');
 Route::get('/product/{product}', 'ProductController@productDetail');
 
 Auth::routes();
+
+//Route::group(['middleware' => ['auth','checkRole:admin']], function() {
+//    Route::get('dashboard','AdminController@dashboard');
+//});
 
 Route::group(['middleware' => ['auth']], function() {
 
@@ -39,9 +42,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('order-history','ProductController@orderHistory');
     Route::get('receipt','ProductController@checkoutReceipt');
-
-    Route::get('exchange-cart/receipt','ProductController@confirmExchange');
-    Route::get('exchange-cart/receipt/print','ProductController@printExchange');
+    Route::get('exchange-cart/receipt/{id}','ProductController@confirmExchange');
+    Route::get('exchange-cart/receipt/print/{id}','ProductController@printExchange');
 
     Route::group(['middleware' => ['checkRole:seller']], function() { //checkRole middleware name registered in Kernel.php
 //        Route::get('add/create','ProductController@create');
@@ -60,8 +62,18 @@ Route::group(['middleware' => ['auth']], function() {
     });
 
     Route::group(['middleware' => ['checkRole:buyer']], function() { //checkRole middleware name registered in Kernel.php
-        Route::resource('comment','CommentController');
+//        Route::resource('comment','CommentController');
 
+    });
+
+    Route::group(['middleware' => ['checkRole:admin']], function() { //checkRole middleware name registered in Kernel.php
+        Route::get('dashboard','AdminController@dashboard');
+        Route::get('list-users','AdminController@userList');
+        Route::get('list-products','AdminController@productList');
+        Route::get('confirm-product','AdminController@confirmProduct');
+        Route::get('confirm-product/detail/{product}', 'AdminController@confirmProductDetail');
+        Route::get('confirm-product/detail/{product}/accept', 'AdminController@acceptProduct');
+        Route::get('confirm-product/detail/{product}/reject', 'AdminController@rejectProduct');
     });
 });
 
