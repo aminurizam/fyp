@@ -11,9 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('src/css/self.css') }}">
-
+    @yield('head')
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([

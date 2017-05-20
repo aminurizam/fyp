@@ -25,4 +25,9 @@ class Seller extends Model
     {
         return $this->hasOne(ExchangeCart::class, 'exchangeCart_id');
     }
+
+    public function freeCart()
+    {
+        return $this->hasOne(FreeCart::class, 'freeCart_id');
+    }
 }

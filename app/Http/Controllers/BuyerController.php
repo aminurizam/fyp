@@ -115,6 +115,12 @@ class BuyerController extends Controller
         //
     }
 
+    public function terms($id)
+    {
+        $profile = User::findOrFail($id);
+        return view('buyer.beSellerConfirm', compact('profile'));
+    }
+
     public function beSeller($id)
     {
         $profiles = User::findOrFail($id);

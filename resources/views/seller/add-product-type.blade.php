@@ -43,8 +43,8 @@
                                     <option value="">Select category</option>
                                     <option value="Fashion">Fashion</option>
                                     <option value="Electronic">Electronic</option>
-                                    <option value="Sports & Recreation">Sports</option>
-                                    <option value="Health & Beauty">Health</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Health">Health</option>
                                     <option value="Books">Books</option>
                                     <option value="Others">Others</option>
                                 </select>
@@ -74,8 +74,8 @@
                                 <option value="">Select category</option>
                                 <option value="Fashion">Fashion</option>
                                 <option value="Electronic">Electronic</option>
-                                <option value="Sports & Recreation">Sports</option>
-                                <option value="Health & Beauty">Health</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Health">Health</option>
                                 <option value="Books">Books</option>
                                 <option value="Others">Others</option>
                             </select>
@@ -106,8 +106,8 @@
                                 <option value="">Select category</option>
                                 <option value="Fashion">Fashion</option>
                                 <option value="Electronic">Electronic</option>
-                                <option value="Sports & Recreation">Sports</option>
-                                <option value="Health & Beauty">Health</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Health">Health</option>
                                 <option value="Books">Books</option>
                                 <option value="Others">Others</option>
                             </select>

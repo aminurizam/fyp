@@ -30,8 +30,8 @@
         <p>Date & Time Transaction: {{ $exchange->created_at }}</p>
         <br>
         <h3>Exchange Requester Details</h3>
-        <p>Name: {{ $exchange->seller->user->name }}</p>
-        <p>Contact Number: {{ $exchange->seller->user->buyer->phoneNo }}</p>
+        {{--<p>Name: {{ $exchange->seller->user->name }}</p>--}}
+        {{--<p>Contact Number: {{ $exchange->seller->user->buyer->phoneNo }}</p>--}}
 
         <table width="100%">
             <thead>

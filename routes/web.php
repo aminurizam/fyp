@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/shopping-cart','ProductController@viewCart');
     Route::delete('/cart/{id}','ProductController@removeProduct');
     Route::resource('profile', 'BuyerController');
+    Route::get('/profile/{profile}/terms', 'BuyerController@terms');
     Route::get('/profile/{profile}', 'BuyerController@beSeller');
     Route::post('add/exchange-cart', 'ProductController@storeExchange');
 
@@ -78,6 +79,10 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::get('/home', 'HomeController@index');
+
+// Route::get('/terms', function () {
+//     return view('buyer.beSellerConfirm');
+// });
 
 
 

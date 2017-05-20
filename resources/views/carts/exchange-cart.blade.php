@@ -34,7 +34,7 @@
                         <textarea name="details" cols="30" rows="5" class="form-control" placeholder="Provide any related information for the product.." required></textarea><br>
                         <h4><strong>Upload Image</strong></h4>
                         <input type="file" name="image" id="fileUpload" required>
-                        <button type="submit" class="btn btn-success pull-right">Submit</button>
+                        <button type="submit" class="btn btn-success pull-right">Submit Request</button>
                     </div>
                     </form>
                 </div>

@@ -86,11 +86,16 @@
 
                         @if($profile->id == Auth::user()->id)
                             @if(Auth::user()->roleCheck('buyer'))
-                            <div class="pull-left">
-                                <a href="{{ action('BuyerController@beSeller', $profile->id)}}">
-                                    <button type="submit" class="btn btn-primary">Be a seller</button>
-                                </a>
-                            </div>
+                            {{--<div class="pull-left">--}}
+                                {{--<a href="{{ action('BuyerController@beSeller', $profile->id)}}">--}}
+                                    {{--<button type="submit" class="btn btn-primary">Be a seller</button>--}}
+                                {{--</a>--}}
+                            {{--</div>--}}
+                                <div class="pull-left">
+                                    <a href="{{ action('BuyerController@terms', $profile->id)}}">
+                                        <button type="submit" class="btn btn-primary">Be a seller</button>
+                                    </a>
+                                </div>
                             @endif
                             <div class="pull-right">
                                 <a href="{{ action('BuyerController@edit', $profile->id) }}">

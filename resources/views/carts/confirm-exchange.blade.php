@@ -35,14 +35,15 @@
             </div>
 
             <div class="col-md-12">
-                <div class="list-inline pull-right">
+                <div class="list-inline pull-right " style="display: inline-block">
                     <form action="{{ action('ProductController@deleteExchange', $exchange->id) }}" method="post">
                         {{ csrf_field() }}
                         {{method_field('DELETE')}}
-                        <button type="submit" class="btn btn-danger">Reject</button>
+                        <button type="submit" class="btn btn-danger" >Reject Request</button>
+                        <a href="{{ action('ProductController@confirmExchange', $exchange->product_id) }}" class="btn btn-success" >Accept Request</a>
                     </form>
                     {{--<button type="submit" class="btn btn-success">Confirm</button>--}}
-                    <a href="{{ action('ProductController@confirmExchange', $exchange->product_id) }}" class="btn btn-success">Confirm</a>
+
                 </div>
             </div>
 

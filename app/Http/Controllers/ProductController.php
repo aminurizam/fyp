@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ExchangeCart;
+use App\FreeCart;
 use App\Order;
 use App\Product;
 use App\User;
@@ -78,6 +79,7 @@ class ProductController extends Controller
     {
         return view('catalog.add-product');
     }
+
     public function store(Request $request)
     {
         /*Add product into catalog*/
@@ -111,6 +113,8 @@ class ProductController extends Controller
 
     }
 
+    /* Carts Function */
+
     public function addToCart(Request $request, $id)
     {
         $product = Product::find($id);
@@ -127,7 +131,16 @@ class ProductController extends Controller
                 return view('carts.exchange-cart', compact('product'));
 //            return view('carts.exchange-cart');
             } else {
-                return view('carts.free-cart',compact('product'));
+//                return view('carts.free-cart',compact('product'));
+                $freeCart = new FreeCart();
+                $freeCart = FreeCart::where('product_id', $product->id);
+                $freeCart->product_id = $request->id;
+                $freeCart->user_id = Auth::user()->id;
+                $freeCart->seller_id = $request->sid;
+
+                $product->quantity = '0';
+                $product->save();
+                return redirect()->action('ProductController@printFreeReceipt');
             }
         } else {
             return redirect()->action('ProductController@catalog')->withErrors('Unable to buy own product');
@@ -146,7 +159,15 @@ class ProductController extends Controller
         return view('carts.show-cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
     }
 
-/* Exchange Cart Function */
+    /* End of Cart Function */
+
+    public function printFreeReceipt($id)
+    {
+        $product = Product::findOrFail($id);
+
+    }
+
+    /* Exchange Cart Function */
 
     public function storeExchange(Request $request)
     {
@@ -180,7 +201,7 @@ class ProductController extends Controller
     public function viewExchange()
     {
 //        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('transactionType','Exchange')->get();
-        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('statusExchange','pending')->get();
         return view('carts.exchange-list',compact('exchanges'));
     }
 
@@ -204,8 +225,13 @@ class ProductController extends Controller
     public function confirmExchange($id)
     {
 //        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get()
-        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->where('product_id', $id)->get();
+        $exchanges = ExchangeCart::where('seller_id', Auth::id())->where('product_id', $id)->get();
+//        dd(Auth::id());
+        $ex = ExchangeCart::where('product_id', $id)->first();
+        $ex->statusExchange = 'confirmed';
+        $ex->save();
         return view('receipt.exchange-receipt', compact('exchanges'));
+
     }
 
     public function printExchange($id)

@@ -4,8 +4,10 @@
     <div class="container">
         <div class="row">
         <div class="col-md-4">
-            <h1>Checkout</h1>
+            <h1>Payment Details</h1>
             <h4>Your Total: RM{{ $total }}</h4>
+            {{-- <h1>Make Payment</h1>
+            <h4>Deposit: RM15</h4> --}}
             <div id="charge-error" class="alert alert-danger {{ !Session::has('error') ? 'hidden' : '' }}">
                 {{ Session::get('error') }}
             </div>
@@ -18,7 +20,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12">
-                        <div class="form-group">
+                        <div class="form-groups">
                             <label for="address">Address</label>
                             <input type="text" id="address" class="form-control" required name="address">
                         </div>
@@ -59,7 +61,7 @@
                     </div>
                 </div>
                 {{ csrf_field() }}
-                <button type="submit" class="btn btn-success">Buy now</button>
+                <button type="submit" class="btn btn-success pull-right">Pay</button>
             </form>
             </div>
     </div>
