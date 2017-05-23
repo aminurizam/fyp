@@ -22,7 +22,6 @@ class CreateOrdersTable extends Migration
             $table->text('address');
             $table->string('name');
             $table->string('payment_id');
-            $table->integer('exchangeCart_id')->nullable();
             $table->timestamps();
         });
     }

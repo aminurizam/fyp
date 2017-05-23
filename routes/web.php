@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('receipt','ProductController@checkoutReceipt');
     Route::get('exchange-cart/receipt/{id}','ProductController@confirmExchange');
     Route::get('exchange-cart/receipt/print/{id}','ProductController@printExchange');
+    Route::get('free-receipt/receipt/{id}','ProductController@freeReceipt');
+    Route::get('free-receipt/receipt/print/{id}','ProductController@printFree');
 
     Route::group(['middleware' => ['checkRole:seller']], function() { //checkRole middleware name registered in Kernel.php
 //        Route::get('add/create','ProductController@create');

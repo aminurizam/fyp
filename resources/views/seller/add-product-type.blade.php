@@ -52,7 +52,7 @@
                             <br>
                             <h4>Details</h4><textarea name="detail" id="" cols="30" rows="5" class="form-control" placeholder="Eg: Good condition: 7/10"></textarea><br>
                             <h4>Upload Image </h4>
-                            <input type="file" name="image" />
+                            <input type="file" name="image"/>
                             <input type="hidden" name="transactionType" value="buy">
                             <button type="submit" class="btn btn-primary pull-right">Submit</button>
                             <hr>

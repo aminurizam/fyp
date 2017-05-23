@@ -35,6 +35,7 @@
                         <div class="form-group">
                             <label for="card-number">Credit Card Number</label>
                             <input type="text" id="card-number" class="form-control" required>
+                            <p>For testing: 4242 4242 4242 4242</p>
                         </div>
                     </div>
                     <div class="col-xs-12">
@@ -52,6 +53,7 @@
                                 </div>
                             </div>
                         </div>
+                        <p>Any valid date</p>
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group">

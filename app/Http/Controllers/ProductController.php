@@ -133,14 +133,15 @@ class ProductController extends Controller
             } else {
 //                return view('carts.free-cart',compact('product'));
                 $freeCart = new FreeCart();
-                $freeCart = FreeCart::where('product_id', $product->id);
+//                $freeCart = FreeCart::where('product_id', $id);
                 $freeCart->product_id = $request->id;
                 $freeCart->user_id = Auth::user()->id;
-                $freeCart->seller_id = $request->sid;
-
+                $freeCart->seller_id = $product->seller_id;
+//                dd($freeCart);
                 $product->quantity = '0';
                 $product->save();
-                return redirect()->action('ProductController@printFreeReceipt');
+                $freeCart->save();
+                return redirect()->action('ProductController@freeReceipt', $product->id);
             }
         } else {
             return redirect()->action('ProductController@catalog')->withErrors('Unable to buy own product');
@@ -161,11 +162,29 @@ class ProductController extends Controller
 
     /* End of Cart Function */
 
-    public function printFreeReceipt($id)
+    /* Free Cart Func */
+    public function freeReceipt($id)
     {
-        $product = Product::findOrFail($id);
-
+//        $product = Product::where('id', $id)->first();
+//        $product = Product::find($id);
+        $freeCart = FreeCart::where('product_id', $id)->get();
+//        dd($freeCart);
+        return view('receipt.free-receipt', compact('freeCart'));
     }
+
+    public function printFree($id)
+    {
+//        $freeCart = FreeCart::where('product_id', $id)->get();
+////        dd($freeCart);
+//        return view('receipt.free-receipt', compact('freeCart'));
+        $freeCart = FreeCart::where('product_id', $id)->get();
+//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('receipt.print-free-receipt', compact('freeCart'));
+        return $pdf->stream('print-free-receipt.pdf');
+    }
+
+    /* End of Free Cart */
 
     /* Exchange Cart Function */
 
@@ -295,7 +314,7 @@ class ProductController extends Controller
         Stripe::setApiKey('sk_test_OGTYK9f03acuDWttF6GIygRi');
         try{
             $charge = Charge::create(array(
-               "amount" => $cart->totalPrice * 100,
+                "amount" => $cart->totalPrice * 100,
                 "currency" => "myr",
                 "source" => $request->input('stripeToken'), // obtained with Stripe.js
                 "description" => "Test Charge"
@@ -314,7 +333,7 @@ class ProductController extends Controller
         }
 
         Session::forget('cart');
-        return redirect()->action('ProductController@checkoutReceipt')->with('success','Successfully purchased item!');
+        return redirect()->action('ProductController@catalog')->with('success','Successfully purchased item!');
     }
 
     public function checkoutReceipt()
@@ -334,8 +353,6 @@ class ProductController extends Controller
         return view('orders.order-history', ['orders' => $orders]);
 //        return view('orders.order-history');
     }
-
-
 
 /*
  * end of sell & buy function
@@ -375,6 +392,4 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         return view('carts.exchange-cart',compact('product'));
     }
-
-
 }

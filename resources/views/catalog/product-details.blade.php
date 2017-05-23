@@ -39,7 +39,7 @@
                                 Add to Free Cart
                                 @endif
                             </button>
-                            <input type="hidden" name="sid">
+                            {{--<input type="hidden" name="sid" value="{{ $product->seller_id }}">--}}
                         </form>
                 @endif
             </div>
