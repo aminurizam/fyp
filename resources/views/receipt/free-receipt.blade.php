@@ -3,7 +3,7 @@
 
     <div class="container">
         <div class="row">
-            @foreach($freeCart as $free)
+            {{--@foreach($freeCart as $free)--}}
 
                 <div class="col-md-10 col-md-offset-1">
 
@@ -16,9 +16,9 @@
                     <p>Transaction Type: Free</p>
                     <p>Date & Time Transaction: {{ $free->created_at }}</p>
                     <br>
-                    <h3>Giver Details</h3>
-                    <p>Name: {{ $free->seller->user->name }}</p>
-                    <p>Contact Number: {{ $free->seller->user->buyer->phoneNo }}</p>
+                    <h3>Product Information</h3>
+{{--                    <p>Name: {{ $free->product->user->name}}</p>--}}
+{{--                    <p>Contact Number: {{ $free->seller->user->phoneNo }}</p>--}}
 
                     <table class="table table-bordered">
                         <thead>
@@ -39,7 +39,7 @@
 
                 </div>
 
-            @endforeach
+            {{--@endforeach--}}
         </div>
     </div>
 @endsection

@@ -28,6 +28,6 @@ class Seller extends Model
 
     public function freeCart()
     {
-        return $this->hasOne(FreeCart::class, 'freeCart_id');
+        return $this->hasOne(FreeCart::class);
     }
 }

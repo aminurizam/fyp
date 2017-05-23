@@ -23,15 +23,15 @@
 </style>
 <body>
 
-@foreach($freeCart as $free)
+{{--@foreach($freeCart as $free)--}}
     <h2>Receipt Order #0000{{ $free->id }}</h2>
     <hr>
     <p>Transaction Type: Free</p>
     <p>Date & Time Transaction: {{ $free->created_at }}</p>
     <br>
-    <h3>Giver Details</h3>
-    <p>Name: {{ $free->seller->user->name }}</p>
-    <p>Contact Number: {{ $free->seller->user->buyer->phoneNo }}</p>
+    <h3>Product Information</h3>
+    {{--<p>Name: {{ $free->seller->user->name }}</p>--}}
+    {{--<p>Contact Number: {{ $free->seller->user->buyer->phoneNo }}</p>--}}
 
     <table width="100%">
         <thead>
@@ -51,6 +51,6 @@
         </tbody>
     </table>
     <br>
-@endforeach
+{{--@endforeach--}}
 </body>
 </html>

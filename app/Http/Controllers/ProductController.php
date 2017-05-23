@@ -167,20 +167,17 @@ class ProductController extends Controller
     {
 //        $product = Product::where('id', $id)->first();
 //        $product = Product::find($id);
-        $freeCart = FreeCart::where('product_id', $id)->get();
+        $free = FreeCart::where('product_id', $id)->first();
 //        dd($freeCart);
-        return view('receipt.free-receipt', compact('freeCart'));
+//        dd($free);
+        return view('receipt.free-receipt', compact('free'));
     }
 
     public function printFree($id)
     {
-//        $freeCart = FreeCart::where('product_id', $id)->get();
-////        dd($freeCart);
-//        return view('receipt.free-receipt', compact('freeCart'));
-        $freeCart = FreeCart::where('product_id', $id)->get();
-//        $exchanges = ExchangeCart::where('seller_id', Auth::user()->id)->get();
+        $free = FreeCart::where('product_id', $id)->first();
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('receipt.print-free-receipt', compact('freeCart'));
+        $pdf->loadView('receipt.print-free-receipt', compact('free'));
         return $pdf->stream('print-free-receipt.pdf');
     }
 

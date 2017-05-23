@@ -22,8 +22,9 @@
                         <br><br>
                         <h4>Carts Section</h4>
                         <a href="{{ action('ProductController@viewCart') }}">Sell and Buy Cart</a><br>
-                        <a href="">Free Cart</a><br>
-                        <a href="">Exchange Cart</a><br>
+                        @if(Auth::user()->roleCheck('seller'))
+                        <a href="{{ action('ProductController@viewExchange') }}">Exchange Cart</a><br>
+                        @endif
                     @endforeach
                 </div>
 
