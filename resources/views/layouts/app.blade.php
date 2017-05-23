@@ -129,18 +129,6 @@
 
         @yield('content')
     </div>
-    {{--<footer class="main-footer">--}}
-        {{--<div class="pull-right hidden-xs">--}}
-            {{--<b>Version</b> 2.3.8--}}
-        {{--</div>--}}
-        {{--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights--}}
-        {{--reserved.--}}
-    {{--</footer>--}}
-
-   
-    <div class="disclaimer">
-        <p style="text-align: center"><b>Disclaimer</b><br>This website is for educational purpose only. It is not related to any physical store or company with same name or business model.</p>
-    </div>
     <!-- Scripts -->
     {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>--}}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
